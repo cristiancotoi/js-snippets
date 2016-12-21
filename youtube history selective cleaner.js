@@ -13,18 +13,59 @@ var titleKeywords = [
 	'The Chainsmokers',
 	'Ariana Grande',
 	'Anna Kendrick',
-	'Shawn Mendes'
+	'Graham Norton',
+	'Meghan Trainor',
+	'Wiz Khalifa',
+	'Maroon 5',
+	'Passenger',
+	'Ed Sheeran',
+	'Coldplay',
+	'Lorde',
+	'David Bowie',
+	'Taylor Swift',
+	'Ellie Goulding',
+	'MAGIC',
+	'Bruno Mars',
+	'Shawn Mendes',
+	'World Cup',
+	'Pentatonix',
+	'Fifth Harmony',
+	'Peter Hollens',
+	'Alan Walker',
+	'Pitbull',
+	'Steve Harvey',
+	'BBC Radio 1',
+	'Ricky Martin',
+	'Valesca Popozuda',
+	'Dove Cameron',
+	'Rihanna',
+	'Cláudia Leitte',
+	'Claudia Leitte',
+	'Claudia Leite',
+	'Sapão',
+	'The Chipettes'
 ];
 
-function removeVideoByArtist(name) {
-	console.log('Removing', name);
-	$('.yt-uix-tile-link').each(function(index,element){
-		var text = $(element).text();
-		if(text.indexOf(name)>-1){
+var removedItems = 0;
+
+function removeVideoWhenLocatorContainsText(locator, name) {
+	$(locator).each(function(index,element){
+		var text = $(element).text().toLowerCase();
+		if(text.indexOf(name.toLowerCase())>-1){
 			var $closeBtn = $(element).parents('li>div.yt-lockup-video').find('button.dismiss-menu-choice');
 			$closeBtn.get(0).click();
+			removedItems++;
 		}
 	});
+}
+
+
+function removeVideoByArtist(name) {
+	removeVideoWhenLocatorContainsText('.yt-uix-tile-link', name);
+}
+
+function removeVideoByChannelName(name) {
+	removeVideoWhenLocatorContainsText('.yt-uix-sessionlink', name);
 }
 
 function injectScriptAndUse() {
@@ -35,6 +76,8 @@ function injectScriptAndUse() {
     console.log('loaded');
 	setTimeout(function() {
 		titleKeywords.forEach(removeVideoByArtist);
+		titleKeywords.forEach(removeVideoByChannelName);
+		console.log('Removed', removedItems==0?'no':removedItems, 'items');
 	}, 1500);
   };
   head.appendChild(script);
