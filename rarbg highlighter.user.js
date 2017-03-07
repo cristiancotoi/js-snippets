@@ -55,7 +55,7 @@ function highlightTitle(keyword, color){
 
 function killByKeyword(keyword){
     var divs;
-    divs = document.evaluate("//span[contains(text(),'IMDB')]/parent::*/parent::*",
+    divs = document.evaluate("//span[contains(text(),'" + keyword + "')]/parent::*/parent::*",
             document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
     for (index = 0; index < divs.snapshotLength; ++index) {
