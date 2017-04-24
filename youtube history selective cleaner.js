@@ -53,7 +53,8 @@ function removeVideoWhenLocatorContainsText(locator, name) {
 		var text = $(element).text().toLowerCase();
 		if(text.indexOf(name.toLowerCase())>-1){
 			var $closeBtn = $(element).parents('li>div.yt-lockup-video').find('button.dismiss-menu-choice');
-			$closeBtn.get(0).click();
+			var btn = $closeBtn.get(0);
+                        if(btn) btn.click();
 			removedItems++;
 		}
 	});
